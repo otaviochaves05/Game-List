@@ -1,9 +1,18 @@
 package com.devsuperior.dslist.entities;
 
+import jakarta.persistence.*;
+
+import java.util.Objects;
+
+@Entity
+@Table(name = "tb_game")
 public class Game {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String title;
+    @Column(name = "game_year")
     private int year;
     private String genre;
     private String platform;
@@ -88,5 +97,18 @@ public class Game {
 
     public void setLongDescription(String longDescription) {
         this.longDescription = longDescription;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Game game = (Game) o;
+        return id == game.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
