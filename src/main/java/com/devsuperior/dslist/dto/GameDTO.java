@@ -1,41 +1,36 @@
-package com.devsuperior.dslist.entities;
+package com.devsuperior.dslist.dto;
 
-import jakarta.persistence.*;
+import com.devsuperior.dslist.entities.Game;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import org.springframework.beans.BeanUtils;
 
-import java.util.Objects;
-
-@Entity
-@Table(name = "tb_game")
-public class Game {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class GameDTO {
     private long id;
     private String title;
-    @Column(name = "game_year")
     private int year;
     private String genre;
     private String platforms;
     private double score;
     private String imgUrl;
-    @Column(columnDefinition = "TEXT")
     private String shortDescription;
-    @Column(columnDefinition = "TEXT")
     private String longDescription;
 
-    public Game(){}
+    public GameDTO(){}
 
-    public Game(long id, String title, int year, String genre, String platforms, double score,
-                String imgUrl, String shortDescription, String longDescription) {
-        this.id = id;
-        this.title = title;
-        this.year = year;
-        this.genre = genre;
-        this.platforms = platforms;
-        this.score = score;
-        this.imgUrl = imgUrl;
-        this.shortDescription = shortDescription;
-        this.longDescription = longDescription;
+    public GameDTO(Game entity) {
+        BeanUtils.copyProperties(entity, this);
+        /*id = entity.getId();
+        title = entity.getTitle();
+        year = entity.getYear();
+        genre = entity.getGenre();
+        platforms = entity.getPlatforms();
+        score = entity.getScore();
+        imgUrl = entity.getImgUrl();
+        shortDescription = entity.getShortDescription();
+        longDescription = entity.getLongDescription();*/
     }
 
     public long getId() {
@@ -110,18 +105,4 @@ public class Game {
         this.longDescription = longDescription;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Game game = (Game) o;
-        return id == game.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
-    }
 }
-
-
